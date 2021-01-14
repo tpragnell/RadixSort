@@ -101,15 +101,15 @@ public class Radix{
       } else {
         ps.add(data.getNthNode(i).getData());
       }
-      radixSortSimple(ng);
-      radixSortSimple(ps);
-      int ns = ng.size();
-      for (int k = ns-1; k >= 0; k--) {
-        data.set(k, Integer.valueOf(ng.getNthNode(k).getData().intValue()*-1));
-      }
-      for (int j = 0; j < ps.size(); j++) {
-        data.set(ns+j, ps.getNthNode(j).getData());
-      }
     }
+    radixSortSimple(ng);
+    radixSortSimple(ps);
+    int ns = ng.size();
+    for (int k = ns-1; k >= 0; k--) {
+      data.set(k, Integer.valueOf(ng.getNthNode(k).getData().intValue()*-1));
+    }
+    for (int j = 0; j < ps.size(); j++) {
+      data.set(ns+j, ps.getNthNode(j).getData());
+    }  
   }
 }
