@@ -13,6 +13,24 @@ public class Radix{
     System.out.println(length(15));
     System.out.println(length(-10));
     System.out.println(length(5112));
+    
+    SortableLinkedList original = new SortableLinkedList();
+    for (int i = 10; i>=1; i--) {
+      original.add(Integer.valueOf(i));
+    }
+    SortableLinkedList[] buckets = new SortableLinkedList[3];
+    for(int i=0; i<buckets.length; i++){
+      int st = (i+1)*10;
+      SortableLinkedList m = new SortableLinkedList();
+      for (int k=st+10; k>=st+1; k--) {
+        m.add(Integer.valueOf(k));
+      }
+      buckets[i] = m;
+    }
+    merge(original, buckets);
+    System.out.println(original.toString());
+    radixSortSimple(original);
+    System.out.println(original.toString());
   }
 
   //get nth digit of an int, where 0 is the ones column, 1 is the tens column etc.
@@ -28,5 +46,54 @@ public class Radix{
   public static int length(int n){
     String s = Integer.toString(Math.abs(n));
     return s.length();
+  }
+
+  public static void merge( SortableLinkedList original, SortableLinkedList[] buckets) {
+    for(SortableLinkedList m : buckets){
+      for(int i=0; i<m.size(); i++){
+        original.add(m.getNthNode(i).getData());
+      }
+    }
+  }
+
+  private static void onepath(int[] array, int col) {
+    int[] temp = new int[array.length];
+    int k = 0;
+    for (int i = 0; i < 10; i++) {
+      for (int a : array) {
+        if (nth(a, col) == i){
+          temp[k] = a;
+          k++;
+        }
+      }
+    }
+    for (int i = 0; i < array.length; i++) {
+      array[i] = temp[i];
+    }
+  }
+
+  public static void radixSortSimple(SortableLinkedList data) {
+    int maxNum = 0;
+    for (int i = 0; i < data.size(); i++) {
+      if (data.get(i) > maxNum) {
+        maxNum = data.get(i);
+      }
+    }
+    int path = Integer.toString(maxNum).length();
+    int[] temp = new int[data.size()];
+    for (int i = 0; i<data.size(); i++) {
+      temp[i] = data.getNthNode(i).getData().intValue();
+    }
+    for (int i = 0; i <= path; i++) {
+      onepath(temp, i);
+    }
+    for (int i = 0; i < data.size(); i++) {
+      data.set(i, Integer.valueOf(temp[i]));
+    }
+  }
+
+  public static void radixSort(SortableLinkedList data) {
+
+
   }
 }
