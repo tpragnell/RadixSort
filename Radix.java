@@ -13,7 +13,7 @@ public class Radix{
     System.out.println(length(15));
     System.out.println(length(-10));
     System.out.println(length(5112));
-    
+
     SortableLinkedList original = new SortableLinkedList();
     for (int i = 10; i>=1; i--) {
       original.add(Integer.valueOf(i));
@@ -93,7 +93,23 @@ public class Radix{
   }
 
   public static void radixSort(SortableLinkedList data) {
-
-
+    SortableLinkedList ng = new SortableLinkedList();
+    SortableLinkedList ps = new SortableLinkedList();
+    for (int i = 0; i < data.size(); i++) {
+      if (data.getNthNode(i).getData().intValue() < 0) {
+        ng.add(Integer.valueOf(data.getNthNode(i).getData().intValue()*-1));
+      } else {
+        ps.add(data.getNthNode(i).getData());
+      }
+      radixSortSimple(ng);
+      radixSortSimple(ps);
+      int ns = ng.size();
+      for (int k = ns-1; k >= 0; k--) {
+        data.set(k, Integer.valueOf(ng.getNthNode(k).getData().intValue()*-1));
+      }
+      for (int j = 0; j < ps.size(); j++) {
+        data.set(ns+j, ps.getNthNode(j).getData());
+      }
+    }
   }
 }
