@@ -31,6 +31,24 @@ public class Radix{
     System.out.println(original.toString());
     radixSortSimple(original);
     System.out.println(original.toString());
+
+    original = new SortableLinkedList();
+    for (int i = 10; i>=1; i--) {
+      original.add(Integer.valueOf(i));
+    }
+    buckets = new SortableLinkedList[3];
+    for(int i=0; i<buckets.length; i++){
+      int st = (i+1)*-10;
+      SortableLinkedList m = new SortableLinkedList();
+      for (int k=st-10; k<=st-1; k++) {
+        m.add(Integer.valueOf(k));
+      }
+      buckets[i] = m;
+    }
+    merge(original, buckets);
+    System.out.println(original.toString());
+    radixSort(original);
+    System.out.println(original.toString());
   }
 
   //get nth digit of an int, where 0 is the ones column, 1 is the tens column etc.
@@ -105,8 +123,10 @@ public class Radix{
     radixSortSimple(ng);
     radixSortSimple(ps);
     int ns = ng.size();
+    int i = 0;
     for (int k = ns-1; k >= 0; k--) {
-      data.set(k, Integer.valueOf(ng.get(k).intValue()*-1));
+      data.set(i, Integer.valueOf(ng.get(k).intValue()*-1));
+      i++;
     }
     for (int j = 0; j < ps.size(); j++) {
       data.set(ns+j, ps.get(j));
