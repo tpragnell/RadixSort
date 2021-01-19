@@ -51,7 +51,7 @@ public class Radix{
   public static void merge( SortableLinkedList original, SortableLinkedList[] buckets) {
     for(SortableLinkedList m : buckets){
       for(int i=0; i<m.size(); i++){
-        original.add(m.getNthNode(i).getData());
+        original.add(m.get(i));
       }
     }
   }
@@ -82,7 +82,7 @@ public class Radix{
     int path = Integer.toString(maxNum).length();
     int[] temp = new int[data.size()];
     for (int i = 0; i<data.size(); i++) {
-      temp[i] = data.getNthNode(i).getData().intValue();
+      temp[i] = data.get(i).intValue();
     }
     for (int i = 0; i <= path; i++) {
       onepath(temp, i);
@@ -96,20 +96,20 @@ public class Radix{
     SortableLinkedList ng = new SortableLinkedList();
     SortableLinkedList ps = new SortableLinkedList();
     for (int i = 0; i < data.size(); i++) {
-      if (data.getNthNode(i).getData().intValue() < 0) {
-        ng.add(Integer.valueOf(data.getNthNode(i).getData().intValue()*-1));
+      if (data.get(i).intValue() < 0) {
+        ng.add(Integer.valueOf(data.get(i).intValue()*-1));
       } else {
-        ps.add(data.getNthNode(i).getData());
+        ps.add(data.get(i));
       }
     }
     radixSortSimple(ng);
     radixSortSimple(ps);
     int ns = ng.size();
     for (int k = ns-1; k >= 0; k--) {
-      data.set(k, Integer.valueOf(ng.getNthNode(k).getData().intValue()*-1));
+      data.set(k, Integer.valueOf(ng.get(k).intValue()*-1));
     }
     for (int j = 0; j < ps.size(); j++) {
-      data.set(ns+j, ps.getNthNode(j).getData());
-    }  
+      data.set(ns+j, ps.get(j));
+    }
   }
 }
